@@ -5,6 +5,7 @@ import AgendamentosDoDia from './components/AgendamentosDoDia/AgendamentosDoDia.
 import FaturamentoDoDia from './components/FaturamentoDoDia/FaturamentoDoDia.js'
 import PacientesAtendidos from './components/PacientesAtendidos/PacientesAtendidos.js'
 import Avisos from './components/AvisoLembretes/AvisosLembretes.js'
+import Agenda from './components/Agenda/Agenda.js'
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
           onEditarFaturamentos={handleEditarFaturamentos} />
       </div>
       <Avisos/>
+      <Agenda/>
     </div>
   );
 }
