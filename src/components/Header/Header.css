@@ -25,3 +25,20 @@ background: linear-gradient(to top, #00a997, transparent 40%);
     display: flex;
     margin-right: 30px;
 }
+.button-agendamentos{
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: 5px;
+    margin-top: 20px;
+    width: 350px;
+}
+.button-agendamentos button{
+    background: #00a997;
+    border: none;
+}
+.button-agendamentos button:hover{
+    background: #00cc7b;
+    border: none;
+}
