@@ -12,3 +12,11 @@
 margin-bottom: 20px;
 max-width: 180px;
 }
+.button-add{
+    background: #00cc7b;
+    border: none;
+}
+.button-add:hover{
+    background: #00a997;
+    border: none;
+}

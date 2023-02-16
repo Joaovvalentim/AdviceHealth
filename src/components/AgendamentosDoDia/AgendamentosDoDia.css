@@ -32,3 +32,11 @@
     align-items: center;
     justify-content: flex-end;
 }
+.button-footer button{
+    background: #00cc7b;
+    border: none;
+}
+.button-footer button:hover{
+    background: #00a997;
+    border: none;
+}
