@@ -2,25 +2,35 @@ import './FaturamentoDoDia.css';
 import React, { useState } from "react";
 import { MdOutlineMonetizationOn } from 'react-icons/md';
 import { Button, Modal } from "react-bootstrap";
+
 function FaturamentoDoDia(props) {
+
+  // Inicializa o estado dos modals como fechado e o estado do faturamento com o valor passado pelo componente pai
   const [showEditarFaturamentosModal, setshowEditarFaturamentosModal] = useState(false);
   const [novoFaturamento, setNovoFaturamento] = useState(props.faturamento);
 
+  // Função para exibir o modal de edição de faturamento
   const handleEditarFaturamentos = () => {
     setshowEditarFaturamentosModal(true);
   };
 
+  // Função para salvar o novo valor do faturamento e fechar o modal de edição
   const handleSalvarFaturamentos = () => {
     setshowEditarFaturamentosModal(false);
     props.onEditarFaturamentos(novoFaturamento);
   };
+
+  // Função para fechar o modal de edição de faturamento
   const handleClose = () => {
     setshowEditarFaturamentosModal(false);
   };
+
+  // Função para atualizar o valor do faturamento de acordo com o que o usuário digitar no input
   const handleFaturamentoChange = (event) => {
     setNovoFaturamento(event.target.value);
   };
 
+ // Renderiza o componente
   return (
     <>
       <div className='container-agendamento'>
