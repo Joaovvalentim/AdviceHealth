@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Table, Modal, Form } from "react-bootstrap";
-
+import './Agenda.css'
 function Agenda() {
     // State para armazenar a lista de pacientes, com dados iniciais pré-definidos
     const [pacientes, setPacientes] = useState([
@@ -69,9 +69,9 @@ function Agenda() {
       };
 
       return (
-        <div>
+        <div className="container-agenda">
             <h1>Agenda do Dia</h1> {/* Título da página */}
-            <Button variant="primary" onClick={handleShowModal}>Adicionar paciente</Button>{/* Botão para abrir o modal de adição de paciente */}
+            <Button variant="primary" onClick={handleShowModal} className="button-add">Adicionar paciente</Button>{/* Botão para abrir o modal de adição de paciente */}
             <Table striped bordered hover> {/* Tabela de pacientes */}
                 <thead>
                     <tr>

@@ -1,0 +1,22 @@
+.container-avisos{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    max-width: 100%;
+    left: 0;
+    margin-bottom: 40px;
+    margin-left: 35px;
+}
+.list-item{
+    max-width: 500px;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    margin-bottom: 0;
+}.list-item  svg {
+margin-left: 0;
+margin-right: 0;
+}
+.list-item button{
+    margin-left: 430px;
+    position: absolute;
+}

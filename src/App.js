@@ -27,22 +27,25 @@ function App() {
 
   // Retorna a estrutura do aplicativo, com seus componentes filhos passando seus respectivos valores e manipuladores de estado
   return (
-    <div className='Home'>
-      <Header />
-      <div className='section-1'>
-        <AgendamentosDoDia
-          agendamentos={agendamentos}
-          onEditarAgendamentos={handleEditarAgendamentos} />
-        <PacientesAtendidos
-          pacientes={pacientes}
-          onEditarPacientes={handleEditarPacientes} />
-        <FaturamentoDoDia
-          faturamento={faturamento}
-          onEditarFaturamentos={handleEditarFaturamentos} />
+    <div className='background'>
+      <div className='Home'>
+        <Header />
+        <div className='section-1'>
+          <AgendamentosDoDia
+            agendamentos={agendamentos}
+            onEditarAgendamentos={handleEditarAgendamentos} />
+          <PacientesAtendidos
+            pacientes={pacientes}
+            onEditarPacientes={handleEditarPacientes} />
+          <FaturamentoDoDia
+            faturamento={faturamento}
+            onEditarFaturamentos={handleEditarFaturamentos} />
+        </div>
+        <Avisos />
+        <Agenda />
       </div>
-      <Avisos/>
-      <Agenda/>
     </div>
+
   );
 }
 

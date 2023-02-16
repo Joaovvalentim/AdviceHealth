@@ -1,5 +1,7 @@
 // Importando os hooks useState e as dependências do React Bootstrap
 import { useState } from 'react';
+import './AvisosLembretes.css'
+import { VscDebugBreakpointLog } from 'react-icons/vsc';
 import { Container, Row, Col, ListGroup, Form, Button, Modal } from 'react-bootstrap';
 import { BsTrash } from "react-icons/bs";
 function Avisos() {
@@ -7,15 +9,15 @@ function Avisos() {
     const [avisos, setAvisos] = useState([
         {
             id: 1,
-            texto: "Lembrete 1",
+            texto: "Contratar João",
         },
         {
             id: 2,
-            texto: "Lembrete 2",
+            texto: "Feriado em breve!",
         },
         {
             id: 3,
-            texto: "Lembrete 3",
+            texto: "Aniversario de Dra.Maria no fim de semana.",
         }
     ]);
 
@@ -51,10 +53,10 @@ function Avisos() {
     }
 // Criando função para lidar com a exclusão de um aviso, filtrando o array de avisos para remover o aviso com o id correspondente
     return (
-        <Container className="mt-4">
+        <Container className="mt-4 container-avisos">
             <Row className="mb-3">
                 <Col>
-                    <h1>Avisos</h1>
+                    <h1>Avisos e Lembretes</h1>
                 </Col>
             </Row>
             <Row className="mb-3">
@@ -70,8 +72,8 @@ function Avisos() {
                  {/* Renderizando uma lista de avisos usando a dependência ListGroup do React Bootstrap, com um loop para criar um item de lista para cada aviso */}
                     <ListGroup>
                         {avisos.map((aviso) => (
-                            <li className="list-group-item d-flex justify-content-between align-items-center" key={aviso.id}>
-                                {aviso.texto}
+                            <li className="list-group-item d-flex align-items-center list-item" key={aviso.id}>
+                               <VscDebugBreakpointLog/> {aviso.texto}
                                  {/* Adicionando um botão para excluir o aviso correspondente, com um ícone de lixeira importado da dependência react-icons */}
                                 <button
                                     type="button"

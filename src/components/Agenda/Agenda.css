@@ -1,0 +1,14 @@
+.container-agenda{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    max-width: 1000px;
+    left: 0;
+    margin-bottom: 100px;
+    margin-left: 50px;
+    /* margin-right: 20px; */
+}
+.button-add{
+margin-bottom: 20px;
+max-width: 180px;
+}
