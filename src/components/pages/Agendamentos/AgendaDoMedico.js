@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { Container, Table, Button, Modal, Form } from 'react-bootstrap';
 import AgendaMedico from './AgendaModal';
 
-
 const MedicosList = () => {
-
   const [medicos, setMedicos] = useState([
     {
       id: 1,
@@ -45,62 +43,86 @@ const MedicosList = () => {
   const [nome, setNome] = useState('');
   const [crm, setCrm] = useState('');
   const [especialidade, setEspecialidade] = useState('');
-  const [agendamentos, setagendamentos] = useState([{}]);
   const [selectedMedico, setSelectedMedico] = useState(null);
   const [showAgendamentoModal, setShowAgendamentoModal] = useState(false);
 
-  const handleClose = () => setShowModal(false);
-  const handleShow = () => setShowModal(true);
-
-  const handleSave = () => {
-    if (!nome || !crm || !especialidade) {
-      alert('Preencha todos os campos');
-      return;
-    }
-    const newId = medicos.length + 1;
-    const newMedico = { id: newId, nome, crm, especialidade, agendamentos };
-    setMedicos([...medicos, newMedico]);
-    setNome('');
-    setCrm('');
-    setEspecialidade('');
-    setagendamentos([{}])
-    handleClose();
+  const handleNomeChange = (e) => {
+    setNome(e.target.value);
   };
-
   const handleDelete = (id) => {
     const updatedMedicos = medicos.filter((medico) => medico.id !== id);
     setMedicos(updatedMedicos);
   };
 
-  const handleOpenAgenda = (id) => {
-    const selected = medicos.find((medico) => medico.id === id);
-    setSelectedMedico(selected);
+  const handleCrmChange = (e) => {
+    setCrm(e.target.value);
+  };
+
+  const handleEspecialidadeChange = (e) => {
+    setEspecialidade(e.target.value);
+  };
+
+  const handleShowModal = () => {
+
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleAddMedico = () => {
+    const newMedico = {
+      id: medicos.length + 1,
+      nome: nome,
+      crm: crm,
+      especialidade: especialidade,
+      agendamentos: []
+    };
+    setMedicos([...medicos, newMedico]);
+    setShowModal(false);
+    setNome('');
+    setCrm('');
+    setEspecialidade('');
+  };
+
+  const handleShowAgendaModal = (medico) => {
+    setSelectedMedico(medico);
     setShowAgendamentoModal(true);
   };
 
+  const handleCloseAgendaModal = () => {
+    setSelectedMedico(null);
+    setShowAgendamentoModal(false);
+  };
   const handleCloseAgenda = () => {
     setSelectedMedico(null);
     setShowAgendamentoModal(false);
   };
-
-  const handleAddAgendamento = (agendamento) => {
-    if (!selectedMedico) return;
-    const updatedMedicos = [...medicos];
-    const medicoIndex = updatedMedicos.findIndex((medico) => medico.id === selectedMedico.id);
-    const updatedMedico = {
-      ...selectedMedico,
-      agendamentos: [...selectedMedico.agendamentos, agendamento]
+  const handleAddAgendamento = (data, horario, paciente, observacoes) => {
+    const newAgendamento = {
+      id: selectedMedico.agendamentos.length + 1,
+      data: data,
+      horario: horario,
+      paciente: paciente,
+      observacoes: observacoes
     };
-    updatedMedicos[medicoIndex] = updatedMedico;
+    const updatedMedicos = medicos.map((medico) => {
+      if (medico.id === selectedMedico.id) {
+        medico.agendamentos.push(newAgendamento);
+      }
+      return medico;
+    });
     setMedicos(updatedMedicos);
-    handleCloseAgenda();
+    setShowAgendamentoModal(false);
   };
+
   return (
     <Container>
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>Id</th>
+            <th>#</th>
             <th>Nome</th>
             <th>CRM</th>
             <th>Especialidade</th>
@@ -115,84 +137,51 @@ const MedicosList = () => {
               <td>{medico.crm}</td>
               <td>{medico.especialidade}</td>
               <td>
-                <Button variant="primary" onClick={() => handleOpenAgenda(medico.id)}>Agenda</Button>{' '}
+                <Button variant="primary" onClick={() => handleShowAgendaModal(medico)}>Agenda</Button>
                 <Button variant="danger" onClick={() => handleDelete(medico.id)}>Excluir</Button>
               </td>
             </tr>
           ))}
         </tbody>
       </Table>
+      <Button variant="primary" onClick={handleShowModal}>Adicionar Médico</Button>
 
-      <Button variant="primary" onClick={handleShow}>
-        Adicionar Novo Médico
-      </Button>
-
-      <Modal show={showModal} onHide={handleClose}>
+      <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Adicionar Novo Médico</Modal.Title>
+          <Modal.Title>Adicionar Médico</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group controlId="formNome">
               <Form.Label>Nome</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Digite o nome do médico"
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
-              />
+              <Form.Control type="text" placeholder="Digite o nome do médico" value={nome} onChange={handleNomeChange} />
             </Form.Group>
 
-            <Form.Group controlId="formCRM">
+            <Form.Group controlId="formCrm">
               <Form.Label>CRM</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Digite o CRM do médico"
-                value={crm}
-                onChange={(e) => setCrm(e.target.value)}
-              />
+              <Form.Control type="text" placeholder="Digite o CRM do médico" value={crm} onChange={handleCrmChange} />
             </Form.Group>
 
             <Form.Group controlId="formEspecialidade">
               <Form.Label>Especialidade</Form.Label>
-              <Form.Control
-                as="select"
-                value={especialidade}
-                onChange={(e) => setEspecialidade(e.target.value)}
-              >
-                <option value="">Selecione uma opção</option>
-                <option value="Cardiologia">Cardiologia</option>
-                <option value="Dermatologia">Dermatologia</option>
-                <option value="Pediatria">Pediatria</option>
-                <option value="Neurologia">Neurologia</option>
-                <option value="Oncologia">Oncologia</option>
-              </Form.Control>
+              <Form.Control type="text" placeholder="Digite a especialidade do médico" value={especialidade} onChange={handleEspecialidadeChange} />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancelar
-          </Button>
-          <Button variant="primary" type="submit" onClick={handleSave}>
-            Salvar
-          </Button>
+          <Button variant="secondary" onClick={handleCloseModal}>Fechar</Button>
+          <Button variant="primary" onClick={handleAddMedico}>Adicionar</Button>
         </Modal.Footer>
       </Modal>
+
       {selectedMedico && (
         <AgendaMedico
           show={showAgendamentoModal}
-          onHide={handleCloseAgenda}
+          handleClose={handleCloseAgendaModal}
+          handleAddAgendamento={handleAddAgendamento}
           medico={selectedMedico}
-          onAddAgendamento={handleAddAgendamento}
           handleCloseAgenda={handleCloseAgenda}
         />
-      )}
-
-      {selectedMedico && (
-        <Button variant="primary" onClick={() => setShowAgendamentoModal(true)}>
-          Novo Agendamento
-        </Button>
       )}
     </Container>
   );
