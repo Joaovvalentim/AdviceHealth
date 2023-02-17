@@ -8,6 +8,7 @@ const AgendaModal = ({ show, handleCloseAgenda, medico, handleAddAgendamento }) 
     paciente: '',
     observacoes: '',
   });
+  const [agendarAtivo, setAgendarAtivo] = useState(false); // Adiciona estado para controlar visibilidade do formulário de agendamento
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -28,8 +29,17 @@ const AgendaModal = ({ show, handleCloseAgenda, medico, handleAddAgendamento }) 
     });
   };
 
+  const handleAbrirAgendar = () => {
+    setAgendarAtivo(true);
+  }
+
+  const handleFecharAgendar = () => {
+    setAgendarAtivo(false);
+    handleCloseAgenda();
+  }
+
   return (
-    <Modal show={show} onHide={handleCloseAgenda}>
+    <Modal show={show} onHide={handleFecharAgendar}>
       <Modal.Header closeButton>
         <Modal.Title>Agenda do Médico</Modal.Title>
       </Modal.Header>
@@ -54,54 +64,62 @@ const AgendaModal = ({ show, handleCloseAgenda, medico, handleAddAgendamento }) 
             ))}
           </tbody>
         </Table>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group>
-            <Form.Label>Data</Form.Label>
-            <Form.Control
-              type="date"
-              name="data"
-              value={formData.data}
-              onChange={handleInputChange}
-              required
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Horário</Form.Label>
-            <Form.Control
-              type="time"
-              name="horario"
-              value={formData.horario}
-              onChange={handleInputChange}
-              required
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Paciente</Form.Label>
-            <Form.Control
-              type="text"
-              name="paciente"
-              value={formData.paciente}
-              onChange={handleInputChange}
-              required
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Observações</Form.Label>
-            <Form.Control
-              as="textarea"
-              name="observacoes"
-              value={formData.observacoes}
-              onChange={handleInputChange}
-            />
-          </Form.Group>
-          <Button type="submit">Agendar</Button>
-        </Form>
-        <Button variant="secondary" onClick={handleCloseAgenda}>
+        {agendarAtivo && ( // Renderiza o formulário de agendamento somente se agendarAtivo for verdadeiro
+          <Form onSubmit={handleSubmit}>
+            <Form.Group>
+              <Form.Label>Data</Form.Label>
+              <Form.Control
+                type="date"
+                name="data"
+                value={formData.data}
+                onChange={handleInputChange}
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Horário</Form.Label>
+              <Form.Control
+                type="time"
+                name="horario"
+                value={formData.horario}
+                onChange={handleInputChange}
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Paciente</Form.Label>
+              <Form.Control
+                type="text"
+                name="paciente"
+                value={formData.paciente}
+                onChange={handleInputChange}
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Observações</Form.Label>
+              <Form.Control
+                as="textarea"
+                name="observacoes"
+                value={formData.observacoes}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Button type="submit">Agendar</Button>
+          </Form>
+        )}
+        {!agendarAtivo && ( // Renderiza o botão de Agendar somente se agendarAtivo for falso
+          <Button variant="primary" onClick={handleAbrirAgendar}>Agendar</Button>
+        )}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleFecharAgendar}>
           Fechar
         </Button>
-      </Modal.Body>
+      </Modal.Footer>
     </Modal>
   );
 };
 
 export default AgendaModal;
+
