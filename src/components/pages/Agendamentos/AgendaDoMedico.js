@@ -47,6 +47,7 @@ const MedicosList = () => {
   const [especialidade, setEspecialidade] = useState('');
   const [agendamentos, setagendamentos] = useState([{}]);
   const [selectedMedico, setSelectedMedico] = useState(null);
+  const [showAgendamentoModal, setShowAgendamentoModal] = useState(false);
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
@@ -74,13 +75,26 @@ const MedicosList = () => {
   const handleOpenAgenda = (id) => {
     const selected = medicos.find((medico) => medico.id === id);
     setSelectedMedico(selected);
-    console.log("aqui")
+    setShowAgendamentoModal(true);
   };
 
   const handleCloseAgenda = () => {
     setSelectedMedico(null);
-  }
+    setShowAgendamentoModal(false);
+  };
 
+  const handleAddAgendamento = (agendamento) => {
+    if (!selectedMedico) return;
+    const updatedMedicos = [...medicos];
+    const medicoIndex = updatedMedicos.findIndex((medico) => medico.id === selectedMedico.id);
+    const updatedMedico = {
+      ...selectedMedico,
+      agendamentos: [...selectedMedico.agendamentos, agendamento]
+    };
+    updatedMedicos[medicoIndex] = updatedMedico;
+    setMedicos(updatedMedicos);
+    handleCloseAgenda();
+  };
   return (
     <Container>
       <Table striped bordered hover>
@@ -167,11 +181,18 @@ const MedicosList = () => {
       </Modal>
       {selectedMedico && (
         <AgendaMedico
-          show={selectedMedico !== null}
+          show={showAgendamentoModal}
           onHide={handleCloseAgenda}
           medico={selectedMedico}
+          onAddAgendamento={handleAddAgendamento}
           handleCloseAgenda={handleCloseAgenda}
         />
+      )}
+
+      {selectedMedico && (
+        <Button variant="primary" onClick={() => setShowAgendamentoModal(true)}>
+          Novo Agendamento
+        </Button>
       )}
     </Container>
   );
