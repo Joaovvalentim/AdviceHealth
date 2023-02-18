@@ -3,8 +3,9 @@ import logo from '../../assets/img/logo.png'
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'
 import { AiTwotoneSetting } from 'react-icons/ai';
-function Header() {
 
+
+function Header({title, buttonName, newnavigate}) {
   const navigate = useNavigate();
 
   return (
@@ -13,13 +14,13 @@ function Header() {
         <img src={logo} alt="Logo iHealth" />
       </div>
       <div className='Title'>
-        <h1>Consultorio do João</h1>
+        <h1>{title}</h1>
       </div>
       <div className='button-agendamentos'>
         <Button variant="primary" onClick={() => {
-          navigate('/agendamento')
+          navigate(`/${newnavigate}`)
         }}>
-         <AiTwotoneSetting/> Agendamentos
+         <AiTwotoneSetting/> {buttonName}
         </Button>
       </div>
     </div>

@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import { Table, Button, Modal, Form } from 'react-bootstrap';
-
+import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineCheck } from "react-icons/ai";
+import './AgendaModal.css'
+// Componente de modal para adicionar agendamento para o médico selecionado
 const AgendaModal = ({ show, handleCloseAgenda, medico, handleAddAgendamento }) => {
+
+  // Adiciona estado para controlar o formulário de agendamento
   const [formData, setFormData] = useState({
     data: '',
     horario: '',
     paciente: '',
     observacoes: '',
   });
-  const [agendarAtivo, setAgendarAtivo] = useState(false); // Adiciona estado para controlar visibilidade do formulário de agendamento
 
+  // Adiciona estado para controlar a visibilidade do formulário de agendamento
+  const [agendarAtivo, setAgendarAtivo] = useState(false);
+
+  // Função para lidar com a mudança de entrada no formulário
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({
@@ -18,9 +26,10 @@ const AgendaModal = ({ show, handleCloseAgenda, medico, handleAddAgendamento }) 
     });
   };
 
+  // Função para lidar com o envio do formulário
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleAddAgendamento(formData);
+    handleAddAgendamento(formData.data, formData.horario, formData.paciente, formData.observacoes);
     setFormData({
       data: '',
       horario: '',
@@ -29,36 +38,42 @@ const AgendaModal = ({ show, handleCloseAgenda, medico, handleAddAgendamento }) 
     });
   };
 
+  // Função para lidar com a abertura do formulário de agendamento
   const handleAbrirAgendar = () => {
     setAgendarAtivo(true);
   }
 
+  // Função para lidar com o fechamento do formulário de agendamento
   const handleFecharAgendar = () => {
     setAgendarAtivo(false);
     handleCloseAgenda();
   }
 
+  // Função temporária para exibir um alerta ao clicar no botão de adicionar agendamento
+  const handleAlert = () => {
+    alert("Adicionar novos agendamentos ainda está sendo implementado!")
+  }
   return (
-    <Modal show={show} onHide={handleFecharAgendar}>
+    <Modal show={show} onHide={handleFecharAgendar} className='modal-xl modal-agenda'  >
       <Modal.Header closeButton>
-        <Modal.Title>Agenda do Médico</Modal.Title>
+        <Modal.Title>Agenda do Médico {medico.nome}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Table striped bordered hover>
           <thead>
             <tr>
+              <th>Paciente</th>
               <th>Data</th>
               <th>Horário</th>
-              <th>Paciente</th>
               <th>Observações</th>
             </tr>
           </thead>
           <tbody>
             {medico.agendamentos.map((agendamento) => (
               <tr key={agendamento.id}>
+                <td>{agendamento.paciente}</td>
                 <td>{agendamento.data}</td>
                 <td>{agendamento.horario}</td>
-                <td>{agendamento.paciente}</td>
                 <td>{agendamento.observacoes}</td>
               </tr>
             ))}
@@ -67,6 +82,7 @@ const AgendaModal = ({ show, handleCloseAgenda, medico, handleAddAgendamento }) 
         {agendarAtivo && ( // Renderiza o formulário de agendamento somente se agendarAtivo for verdadeiro
           <Form onSubmit={handleSubmit}>
             <Form.Group>
+              <Modal.Title>Novo Agendamento</Modal.Title>
               <Form.Label>Data</Form.Label>
               <Form.Control
                 type="date"
@@ -105,11 +121,17 @@ const AgendaModal = ({ show, handleCloseAgenda, medico, handleAddAgendamento }) 
                 onChange={handleInputChange}
               />
             </Form.Group>
-            <Button type="submit">Agendar</Button>
+            <div className='button-novo-agendamento'>
+              <Button onClick={handleAlert}><AiOutlineCheck /> Agendar agora</Button>
+            </div>
+
           </Form>
         )}
         {!agendarAtivo && ( // Renderiza o botão de Agendar somente se agendarAtivo for falso
-          <Button variant="primary" onClick={handleAbrirAgendar}>Agendar</Button>
+          <div className='button-agendar'>
+            <Button variant="primary" onClick={handleAbrirAgendar}> <AiOutlinePlus /> Agendar </Button>
+          </div>
+
         )}
       </Modal.Body>
       <Modal.Footer>

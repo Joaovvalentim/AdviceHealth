@@ -29,7 +29,11 @@ function App() {
   return (
     <div className='background'>
       <div className='Home'>
-        <Header />
+        <Header 
+        title="Consultorio Do João"
+        buttonName="Agendar"
+        newnavigate="agendamento"
+        />
         <div className='section-1'>
           <AgendamentosDoDia
             agendamentos={agendamentos}

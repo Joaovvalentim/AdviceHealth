@@ -1,0 +1,42 @@
+
+
+.Home-agenda {
+    width: 1200px;
+    height: 100vh;
+    margin: 0 auto;
+    background: #fff;
+    overflow: hidden;
+    z-index: 999;
+
+}
+.modal-agenda{
+    width: 100%;
+    margin-left: 450px;
+}
+.tabela-agenda{
+    max-width: 800px;
+    height: 400px;
+    margin-top: 20px;
+}
+.button-novo-agendamento{
+    margin-top: 10px;
+}
+.button-novo-agendamento button{
+    background: #00a997;
+    border: none;
+    outline: none;
+}
+.button-novo-agendamento button:hover{
+    background: #00cc7b;
+    border: none;
+}
+
+.button-agendar button{
+    background: #00a997;
+    border: none;
+    outline: none;
+}
+.button-agendar button:hover{
+    background: #00cc7b;
+    border: none;
+}

@@ -1,0 +1,14 @@
+.button-acoes{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.button-agenda  button{
+    background: #00a997;
+    border: none;
+}
+.button-agenda  button:hover{
+    background: #00cc7b;
+    border: none;
+}
